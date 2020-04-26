@@ -23,7 +23,7 @@ def extract_next_links(url, resp):
         #handle tokenization of html content
         html_content = resp.raw_response.content
         soup = BeautifulSoup(page_content, 'lxml')
-        url_tokens = tokenize(soup.get_text())
+        url_tokens = tokenize(soup.get_text().lower()) # Get all text and make it lowercase to ignore case
 
         #save token results in csv
         with open('results.csv', 'a+') as results_csv:

@@ -14,7 +14,7 @@ def extract_next_links(url, resp):
     # We need to do things here
     # Check if response is good. Please check my logic as this was done at like 1 AM LOL
     if resp:
-        if resp >= 300: #100-299 should be able to load a page with content. All others will be invalid 
+        if resp.status >= 300: #100-299 should be able to load a page with content. All others will be invalid 
             return list()
 
         #list of urls found on page

@@ -28,6 +28,7 @@ def extract_next_links(url, resp):
         #save token results in csv
         with open('results.csv', 'a+') as results_csv:
             writer = csv.writer(results_csv)
+            writer.writerow([url, len(url_tokens)])
             for token in url_tokens:
                 writer.writerow([url, token])
 

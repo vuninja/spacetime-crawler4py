@@ -22,7 +22,7 @@ def extract_next_links(url, resp):
 
         #handle tokenization of html content
         html_content = resp.raw_response.content
-        soup = BeautifulSoup(page_content, 'lxml')
+        soup = BeautifulSoup(html_content, 'lxml')
         url_tokens = tokenize(soup.get_text().lower()) # Get all text and make it lowercase to ignore case
 
         #save token results in csv
@@ -41,7 +41,7 @@ def extract_next_links(url, resp):
         # get just href
         for link in links:
             href = link.get('href')
-            if href is not None
+            if href is not None:
                 found_urls.append(href)
         
         return found_urls
@@ -102,10 +102,9 @@ def tokenize(text):
         pattern = re.compile(r"\b(a|about|above|after|again|against|all|am|an|and|any|are|aren't|as|at|be|because|been|before|being|below|between|both|but|by|can't|cannot|could|couldn't|did|didn't|do|does|doesn't|doing|don't|down|during|each|few|for|from|further|had|hadn't|has|hasn't|have|haven't|having|he|he'd|he'll|he's|her|here|here's|hers|herself|him|himself|his|how|how's|i|i'd|i'll|i'm|i've|if|in|into|is|isn't|it|it's|its|itself|let's|me|more|most|mustn't|my|myself|no|nor|not|of|off|on|once|only|or|other|ought|our|ours|ourselves|out|over|own|same|shan't|she|she'd|she'll|she's|should|shouldn't|so|some|such|than|that|that's|the|their|theirs|them|themselves|then|there|there's|these|they|they'd|they'll|they're|they've|this|those|through|to|too|under|until|up|very|was|wasn't|we|we'd|we'll|we're|we've|were|weren't|what|what's|when|when's|where|where's|which|while|who|who's|whom|why|why's|with|won't|would|wouldn't|you|you'd|you'll|you're|you've|your|yours|yourself|yourselves)\b")
         rep = ''
         re.sub(pattern, rep, text)
-        current_token = ""
         try:
-            matches = re.findall('\w{2,}', text)
+            matches = re.findall(r'\w{2,}', re.sub(pattern, rep, text))
             tokens.extend(matches)
-        except UnicodeDecodeError as UDE:
+        except UnicodeDecodeError:
             print("Ran into decoding error.")
     return tokens
